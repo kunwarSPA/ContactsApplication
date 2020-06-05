@@ -19,8 +19,8 @@ class HomeScreen extends StatelessWidget {
       builder: (context, activeTab) {
         return Scaffold(
           appBar: AppBar(
-              //title: Text("Contacts"),
-              ),
+            title: Text("Contacts"),
+          ),
           body: StreamBuilder(
             stream: bloc.getNavigation,
             initialData: bloc.navigationProvider.currentNavigation,
@@ -52,53 +52,40 @@ class HomeScreen extends StatelessWidget {
             },
             child: Icon(Icons.add),
           ),
-          drawer: MenuDrawer(),
+          drawer: Drawer(
+            child: Column(
+              children: <Widget>[
+                UserAccountsDrawerHeader(
+                    accountName: Text("Admin"),
+                    currentAccountPicture:
+                        CircleAvatar(child: Icon(Icons.person)),
+                    accountEmail: Text("12345@gmail.com")),
+                ListTile(
+                  title: Text("Home"),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    bloc.updateNavigation("Home");
+                  },
+                ),
+                ListTile(
+                  title: Text("Add Contacts"),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    bloc.updateNavigation("Add");
+                  },
+                ),
+                ListTile(
+                  title: Text("Favourites"),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    bloc.updateNavigation("Favourites");
+                  },
+                ),
+              ],
+            ),
+          ),
         );
       },
-    );
-  }
-}
-
-class MenuDrawer extends StatelessWidget {
-  // Push the page and remove everything else
-  navigateToPage(BuildContext context, String page) {
-    Navigator.of(context)
-        .pushNamedAndRemoveUntil(page, (Route<dynamic> route) => false);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Drawer(
-      child: ListView(
-        // This could be mapped from a List of items
-        children: <Widget>[
-          UserAccountsDrawerHeader(
-              accountName: Text("Admin"),
-              currentAccountPicture: CircleAvatar(child: Icon(Icons.person)),
-              accountEmail: Text("12345@gmail.com")),
-          ListTile(
-            title: Text("Home"),
-            onTap: () {
-              Navigator.of(context).pop();
-              bloc.updateNavigation("Home");
-            },
-          ),
-          ListTile(
-            title: Text("Add Contacts"),
-            onTap: () {
-              Navigator.of(context).pop();
-              bloc.updateNavigation("Add");
-            },
-          ),
-          ListTile(
-            title: Text("Favourites"),
-            onTap: () {
-              Navigator.of(context).pop();
-              bloc.updateNavigation("Favourites");
-            },
-          ),
-        ],
-      ),
     );
   }
 }
