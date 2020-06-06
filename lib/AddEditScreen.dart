@@ -92,25 +92,33 @@ class _AddEditScreenState extends State<AddEditScreen> {
               inactiveThumbColor: Colors.white,
               inactiveTrackColor: Colors.grey,
             ),
-            if (_image != null || widget.dictionaryModel != null)
-              CircleAvatar(
+            // if (_image != null || widget.dictionaryModel != null)
+            GestureDetector(
+              child: CircleAvatar(
                 child: _image != null
                     ? Image.file(_image)
-                    : Image.memory(base64Decode(widget.dictionaryModel.image)),
+                    : ((widget.dictionaryModel == null ||
+                            widget.dictionaryModel.image == null)
+                        ? Image.memory(
+                            base64Decode(ArchSampleKeys.defaultImageBase64))
+                        : Image.memory(
+                            base64Decode(widget.dictionaryModel.image))),
                 backgroundColor: Colors.transparent,
                 radius: 50,
-              )
-            else
+              ),
+              onTap: getImage,
+            ),
+            /*else
               Text(
                 "Click on Pick Image to select an Image",
                 style: TextStyle(fontSize: 18.0),
-              ),
-            RaisedButton(
+              ),*/
+            /*RaisedButton(
               onPressed: () {
                 getImage();
               },
               child: Text("Pick Image From Gallery"),
-            ),
+            ),*/
             TextFormField(
               initialValue: isEditing ? widget.dictionaryModel.name : '',
               key: ArchSampleKeys.taskField,
