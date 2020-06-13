@@ -82,15 +82,18 @@ class _AddEditScreenState extends State<AddEditScreen> {
         key: _formKey,
         child: Column(
           children: <Widget>[
-            Switch(
-              onChanged: toggleSwitch,
-              value: widget.dictionaryModel != null
-                  ? widget.dictionaryModel.favourites
-                  : switchControl,
-              activeColor: Colors.blue,
-              activeTrackColor: Colors.green,
-              inactiveThumbColor: Colors.white,
-              inactiveTrackColor: Colors.grey,
+            Align(
+              alignment: Alignment.topRight,
+              child: Switch(
+                onChanged: toggleSwitch,
+                value: widget.dictionaryModel != null
+                    ? widget.dictionaryModel.favourites
+                    : switchControl,
+                activeColor: Colors.blue,
+                activeTrackColor: Colors.green,
+                inactiveThumbColor: Colors.white,
+                inactiveTrackColor: Colors.grey,
+              ),
             ),
             // if (_image != null || widget.dictionaryModel != null)
             GestureDetector(
@@ -123,7 +126,6 @@ class _AddEditScreenState extends State<AddEditScreen> {
               initialValue: isEditing ? widget.dictionaryModel.name : '',
               key: ArchSampleKeys.taskField,
               autofocus: !isEditing,
-              style: textTheme.headline5,
               decoration: InputDecoration(
                 hintText: "Name",
               ),
